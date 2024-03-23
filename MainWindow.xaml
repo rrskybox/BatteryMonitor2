@@ -1,0 +1,17 @@
+﻿<Window x:Class="BatteryMonitor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BatteryMonitor"
+        mc:Ignorable="d"
+        Title="Battery Monitor" Height="100" Width="215" Background="#FF8BD8DA" WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen" VerticalAlignment="Center" HorizontalAlignment="Center" ResizeMode="NoResize">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="21*"/>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="21*"/>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="StatusBox" BorderBrush="#FF000208" Background="#FF86D67B" RenderTransformOrigin="0.489,-0.264" TextAlignment="Center" Grid.Column="1" FontSize="14" Text="{Binding VoltageS, NotifyOnSourceUpdated=True, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+    </Grid>
+</Window>
