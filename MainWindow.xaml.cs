@@ -8,6 +8,8 @@ namespace BatteryMonitor
 {
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
+        public const ushort BM2_Service_UUID = 65520;
+        public const ushort BM2_Characteristic_UUID = 65524;
 
         public InTheHand.Bluetooth.BluetoothDevice? BatteryMonitorDevice { get; set; }
 
@@ -37,7 +39,9 @@ namespace BatteryMonitor
         {
             this.StatusBox.Background = System.Windows.Media.Brushes.Pink;
             InTheHand.Bluetooth.RequestDeviceOptions? requestDeviceOptions = new InTheHand.Bluetooth.RequestDeviceOptions { AcceptAllDevices = true };
-            var devices = await InTheHand.Bluetooth.Bluetooth.ScanForDevicesAsync(requestDeviceOptions);
+            //var devices = await InTheHand.Bluetooth.Bluetooth.ScanForDevicesAsync(requestDeviceOptions);
+            var devices = await InTheHand.Bluetooth.Bluetooth.GetPairedDevicesAsync();
+
             foreach (InTheHand.Bluetooth.BluetoothDevice device in devices)
             {
                 if (device.Name.Contains(name))
@@ -55,14 +59,13 @@ namespace BatteryMonitor
             await gatt.ConnectAsync();
             bool btConnect = gatt.IsConnected;
 
-            var services = await gatt.GetPrimaryServicesAsync();
+            //var services = await gatt.GetPrimaryServicesAsync();
 
-            var service = await gatt.GetPrimaryServiceAsync(65520);
+            var service = await gatt.GetPrimaryServiceAsync(BM2_Service_UUID);
 
             if (service != null)
             {
-                //InTheHand.Bluetooth.
-                GattCharacteristic characteristic = await service.GetCharacteristicAsync(65524);
+                GattCharacteristic characteristic = await service.GetCharacteristicAsync(BM2_Characteristic_UUID);
 
                 if (characteristic != null)
                 {
@@ -108,7 +111,7 @@ namespace BatteryMonitor
             }
         }
 
-        // Declare the event
+        // Declare the property changed event
         public event PropertyChangedEventHandler PropertyChanged;
 
         // Create the OnPropertyChanged method to raise the event
